@@ -24,6 +24,24 @@ npm install
 npm run start
 ```
 
+## Tests
+```bash
+npm test
+```
+
+CI uses coverage:
+```bash
+npm run test:ci
+```
+
+## CI + SonarCloud
+The GitHub Actions pipeline runs tests and publishes coverage to SonarCloud.
+
+Setup:
+1. Create a SonarCloud project in org `ershubhamgarg` with key `todo-app`.
+2. Generate a SonarCloud token:
+   - SonarCloud → My Account → Security → Tokens → Generate.
+3. Add the token as a GitHub repository secret named `SONAR_TOKEN`.
+
 ## Notes
 - iOS simulator does not show local notifications. Use a real device for reminders.
-
