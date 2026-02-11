@@ -1,0 +1,34 @@
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+
+# Expo native
+android/
+ios/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+
+# environment
+.env
+.env.*
+
+# caches
+*.log
+*.tgz
+
+# IDE
+.vscode/
+.idea/
+
+# tooling
+coverage/
