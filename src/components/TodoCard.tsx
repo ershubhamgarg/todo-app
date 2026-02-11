@@ -51,6 +51,7 @@ const TodoCard = ({
 
   return (
     <Pressable
+      testID={`todo-card-${todo.id}`}
       style={[styles.card, todo.completed && styles.cardDone, isActive && { opacity: 0.7 }]}
       onPress={onPress}
     >
@@ -71,7 +72,7 @@ const TodoCard = ({
             size={18}
             color={colors.textMuted}
           />
-          <Pressable onPress={onStar}>
+            <Pressable testID={`todo-star-${todo.id}`} onPress={onStar}>
             <Ionicons
               name={todo.starred ? 'star' : 'star-outline'}
               size={18}
@@ -107,7 +108,7 @@ const TodoCard = ({
                 </View>
               ))}
             </View>
-            <Pressable style={styles.detailsButton} onPress={onDetails}>
+            <Pressable testID={`todo-details-${todo.id}`} style={styles.detailsButton} onPress={onDetails}>
               <Text style={styles.detailsText}>View Details</Text>
               <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
             </Pressable>

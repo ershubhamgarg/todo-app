@@ -47,6 +47,7 @@ const SettingsScreen = ({ navigation }: Props) => {
               <Pressable
                 key={option.key}
                 onPress={() => setThemeMode(option.key)}
+                testID={`theme-mode-${option.key}`}
                 style={[styles.optionRow, index === options.length - 1 && styles.optionLast]}
               >
                 <View>
@@ -71,6 +72,7 @@ const SettingsScreen = ({ navigation }: Props) => {
                 <Pressable
                   key={palette}
                   onPress={() => setThemePalette(palette)}
+                  testID={`palette-${palette}`}
                   style={[styles.paletteItem, active && styles.paletteItemActive]}
                 >
                   <View style={[styles.paletteSwatch, { backgroundColor: swatch }]} />
@@ -87,6 +89,7 @@ const SettingsScreen = ({ navigation }: Props) => {
             <Pressable
               style={[styles.actionButton, styles.actionPrimary]}
               onPress={() => navigation.navigate('Pin', { mode: hasPin ? 'change' : 'set' })}
+              testID="pin-change"
             >
               <Text style={[styles.actionText, styles.actionTextPrimary]}>
                 {hasPin ? 'Change PIN' : 'Set PIN'}
@@ -96,6 +99,7 @@ const SettingsScreen = ({ navigation }: Props) => {
               <Pressable
                 style={styles.actionButton}
                 onPress={() => navigation.navigate('ConfirmPin')}
+                testID="pin-remove"
               >
                 <Text style={styles.actionText}>Remove PIN</Text>
               </Pressable>

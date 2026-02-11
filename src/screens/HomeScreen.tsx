@@ -98,6 +98,7 @@ const HomeScreen = ({ navigation }: Props) => {
                     <Pressable
                       key={item}
                       onPress={() => setFilter(item)}
+                      testID={`filter-chip-${item}`}
                       style={[styles.filterChip, active && styles.filterChipActive]}
                     >
                       <Text style={[styles.filterText, active && styles.filterTextActive]}>

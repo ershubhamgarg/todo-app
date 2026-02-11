@@ -90,6 +90,7 @@ const DetailScreen = ({ navigation, route }: Props) => {
         <View>
           <Text style={styles.label}>Title</Text>
           <TextInput
+            testID="detail-title"
             value={title}
             onChangeText={setTitle}
             style={styles.input}
@@ -101,6 +102,7 @@ const DetailScreen = ({ navigation, route }: Props) => {
         <View>
           <Text style={styles.label}>Notes</Text>
           <TextInput
+            testID="detail-note"
             value={note}
             onChangeText={setNote}
             style={[styles.input, styles.textArea]}
@@ -119,6 +121,7 @@ const DetailScreen = ({ navigation, route }: Props) => {
                 <Pressable
                   key={item}
                   onPress={() => setDue(item)}
+                  testID={`due-chip-${item}`}
                   style={[styles.chip, active && styles.chipActive]}
                 >
                   <Text style={[styles.chipText, active && styles.chipTextActive]}>{item}</Text>
@@ -149,6 +152,7 @@ const DetailScreen = ({ navigation, route }: Props) => {
         <View>
           <Text style={styles.label}>Tags (comma separated)</Text>
           <TextInput
+            testID="detail-tags"
             value={tags}
             onChangeText={setTags}
             style={styles.input}
@@ -160,6 +164,7 @@ const DetailScreen = ({ navigation, route }: Props) => {
         <View>
           <Text style={styles.label}>Reminder (seconds from now)</Text>
           <TextInput
+            testID="detail-reminder-seconds"
             value={reminderSeconds}
             onChangeText={setReminderSeconds}
             style={styles.input}
@@ -173,6 +178,7 @@ const DetailScreen = ({ navigation, route }: Props) => {
         <View>
           <Text style={styles.label}>Reminder (minutes from now)</Text>
           <TextInput
+            testID="detail-reminder-minutes"
             value={reminderMinutes}
             onChangeText={setReminderMinutes}
             style={styles.input}
@@ -192,13 +198,13 @@ const DetailScreen = ({ navigation, route }: Props) => {
           <Pressable style={styles.secondaryButton} onPress={() => navigation.goBack()}>
             <Text style={styles.secondaryButtonText}>Cancel</Text>
           </Pressable>
-          <Pressable style={styles.primaryButton} onPress={handleSave}>
+          <Pressable testID="detail-save" style={styles.primaryButton} onPress={handleSave}>
             <Text style={styles.primaryButtonText}>Save</Text>
           </Pressable>
         </View>
 
         {!isNew && (
-          <Pressable style={styles.dangerButton} onPress={handleDelete}>
+          <Pressable testID="detail-delete" style={styles.dangerButton} onPress={handleDelete}>
             <Text style={styles.dangerButtonText}>Delete Task</Text>
           </Pressable>
         )}

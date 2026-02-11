@@ -183,13 +183,14 @@ const PinScreen = ({ navigation, route }: Props) => {
                 style={[styles.key, digit === 'spacer' && styles.keySpacer]}
                 onPress={() => (digit === 'spacer' ? null : handleDigit(digit))}
                 disabled={digit === 'spacer'}
+                testID={digit === 'spacer' ? undefined : `pin-digit-${digit}`}
               >
                 <Text style={styles.keyText}>{digit === 'spacer' ? '' : digit}</Text>
               </Pressable>
             ))}
           </View>
           <View style={styles.actionRow}>
-            <Pressable style={styles.actionButton} onPress={handleBackspace}>
+            <Pressable testID="pin-delete" style={styles.actionButton} onPress={handleBackspace}>
               <Text style={styles.actionText}>Delete</Text>
             </Pressable>
             {mode !== 'unlock' ? (

@@ -26,13 +26,14 @@ const QuickAdd = ({
     <View style={styles.quickAddCard}>
       <View style={styles.quickRow}>
         <TextInput
+          testID="quick-add-input"
           placeholder="Quick add a task"
           placeholderTextColor={colors.textMuted}
           value={input}
           onChangeText={setInput}
           style={styles.input}
         />
-        <Pressable style={styles.addButton} onPress={handleAdd}>
+        <Pressable testID="quick-add-button" style={styles.addButton} onPress={handleAdd}>
           <Ionicons name="add" size={22} color={colors.surface} />
         </Pressable>
       </View>
