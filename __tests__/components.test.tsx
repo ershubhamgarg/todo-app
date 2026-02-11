@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render, fireEvent, act } from '@testing-library/react-native';
 import { ThemeProvider } from '../src/theme/ThemeProvider';
 import StatsCard from '../src/components/StatsCard';
 import QuickAdd from '../src/components/QuickAdd';
@@ -32,11 +32,13 @@ describe('Components', () => {
     expect(getByText('Today Focus')).toBeTruthy();
   });
 
-  it('renders QuickAdd and adds task', () => {
+  it('renders QuickAdd and adds task', async () => {
     const onAdd = jest.fn().mockResolvedValue(undefined);
-    const { getByPlaceholderText, getByRole } = wrap(<QuickAdd onAdd={onAdd} />);
+    const { getByPlaceholderText, getByTestId } = wrap(<QuickAdd onAdd={onAdd} />);
     fireEvent.changeText(getByPlaceholderText('Quick add a task'), 'New Task');
-    fireEvent.press(getByRole('button'));
+    await act(async () => {
+      fireEvent.press(getByTestId('quick-add-button'));
+    });
     expect(onAdd).toHaveBeenCalled();
   });
 

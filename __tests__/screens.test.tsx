@@ -34,7 +34,7 @@ describe('Screens', () => {
     const { getByText } = renderWithProviders(
       <PinScreen navigation={nav as any} route={{ params: { mode: 'set' } } as any} />
     );
-    expect(getByText('Set PIN')).toBeTruthy();
+    expect(getByText('New PIN')).toBeTruthy();
   });
 
   it('renders ConfirmPinScreen', () => {

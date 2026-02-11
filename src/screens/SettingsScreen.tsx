@@ -24,7 +24,13 @@ const SettingsScreen = ({ navigation }: Props) => {
   const { colors, mode, paletteName, setThemeMode, setThemePalette, effectiveMode } = useTheme();
   const { hasPin } = usePin();
   const styles = useMemo(() => createStyles(colors, typography, spacing), [colors]);
-  const paletteOptions = ['orange', 'green', 'blue', 'red', 'mono'];
+  const paletteOptions = [
+    { key: 'orange', label: 'Orange' },
+    { key: 'green', label: 'Green' },
+    { key: 'blue', label: 'Blue' },
+    { key: 'red', label: 'Red' },
+    { key: 'mono', label: 'Black & White' },
+  ] as const;
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
@@ -66,17 +72,17 @@ const SettingsScreen = ({ navigation }: Props) => {
           <Text style={styles.subtitle}>Pick the accent palette.</Text>
           <View style={styles.paletteRow}>
             {paletteOptions.map((palette) => {
-              const active = palette === paletteName;
-              const swatch = colorPalettes[palette][effectiveMode]?.primary || colors.primary;
+              const active = palette.key === paletteName;
+              const swatch = colorPalettes[palette.key][effectiveMode]?.primary || colors.primary;
               return (
                 <Pressable
-                  key={palette}
-                  onPress={() => setThemePalette(palette)}
-                  testID={`palette-${palette}`}
+                  key={palette.key}
+                  onPress={() => setThemePalette(palette.key)}
+                  testID={`palette-${palette.key}`}
                   style={[styles.paletteItem, active && styles.paletteItemActive]}
                 >
                   <View style={[styles.paletteSwatch, { backgroundColor: swatch }]} />
-                  <Text style={styles.paletteText}>{palette}</Text>
+                  <Text style={styles.paletteText}>{palette.label}</Text>
                 </Pressable>
               );
             })}

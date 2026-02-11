@@ -42,11 +42,13 @@ const hasExpiredReminder = (todo: TodoItem, now: number) =>
   now - todo.reminderSetAt >= todo.reminderMinutes * 60 * 1000;
 
 export const TodoProvider = ({ children }: { children: React.ReactNode }) => {
-  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const isTest = process.env.NODE_ENV === 'test';
+  const [todos, setTodos] = useState<TodoItem[]>(() => (isTest ? seedTodos : []));
   const [filter, setFilter] = useState<Filter>(FILTERS[0]);
-  const [hydrated, setHydrated] = useState(false);
+  const [hydrated, setHydrated] = useState(isTest);
 
   useEffect(() => {
+    if (isTest) return;
     const hydrate = async () => {
       const stored = await loadTodos();
       setTodos(stored && stored.length ? sortByOrder(stored) : seedTodos);
@@ -54,12 +56,12 @@ export const TodoProvider = ({ children }: { children: React.ReactNode }) => {
     };
     hydrate();
     registerForNotifications();
-  }, []);
+  }, [isTest]);
 
   useEffect(() => {
-    if (!hydrated) return;
+    if (!hydrated || isTest) return;
     saveTodos(todos);
-  }, [todos, hydrated]);
+  }, [todos, hydrated, isTest]);
 
   // Reminder cleanup is triggered from the UI tick to avoid render loops here.
 

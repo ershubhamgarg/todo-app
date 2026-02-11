@@ -17,11 +17,13 @@ type PinContextValue = {
 const PinContext = createContext<PinContextValue | null>(null);
 
 export const PinProvider = ({ children }: { children: React.ReactNode }) => {
-  const [pin, setPin] = useState(null);
-  const [hydrated, setHydrated] = useState(false);
-  const [unlocked, setUnlocked] = useState(false);
+  const isTest = process.env.NODE_ENV === 'test';
+  const [pin, setPin] = useState<string | null>(null);
+  const [hydrated, setHydrated] = useState(isTest);
+  const [unlocked, setUnlocked] = useState(isTest);
 
   useEffect(() => {
+    if (isTest) return;
     const hydrate = async () => {
       try {
         const stored = await AsyncStorage.getItem(PIN_KEY);

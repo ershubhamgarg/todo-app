@@ -42,6 +42,7 @@ type PaletteShape = Pick<
   | 'accent'
   | 'primaryDark'
   | 'darkChip'
+  | 'textPrimary'
   | 'backgroundTop'
   | 'backgroundBottom'
   | 'glow'
@@ -65,6 +66,7 @@ export const colorPalettes: Record<string, { light: PaletteShape; dark: PaletteS
       accent: '#FCA311',
       primaryDark: '#2B1E15',
       darkChip: '#2B1E15',
+      textPrimary: '#2B1E15',
       backgroundTop: '#FFF4EC',
       backgroundBottom: '#FCE9D7',
       glow: '#FFD9C2',
@@ -77,6 +79,7 @@ export const colorPalettes: Record<string, { light: PaletteShape; dark: PaletteS
       accent: '#FCA311',
       primaryDark: '#F5D4C0',
       darkChip: '#F5E9E1',
+      textPrimary: '#F5E9E1',
       backgroundTop: '#0F0E0D',
       backgroundBottom: '#1A1512',
       glow: '#2B211B',
@@ -91,6 +94,7 @@ export const colorPalettes: Record<string, { light: PaletteShape; dark: PaletteS
       accent: '#76C893',
       primaryDark: '#1B2C22',
       darkChip: '#1B2C22',
+      textPrimary: '#2B1E15',
       backgroundTop: '#EFFBF4',
       backgroundBottom: '#D8F3E4',
       glow: '#C8EBD8',
@@ -103,6 +107,7 @@ export const colorPalettes: Record<string, { light: PaletteShape; dark: PaletteS
       accent: '#2E8F5B',
       primaryDark: '#D5F2E3',
       darkChip: '#D5F2E3',
+      textPrimary: '#F5E9E1',
       backgroundTop: '#0B1510',
       backgroundBottom: '#122018',
       glow: '#1B2C22',
@@ -117,6 +122,7 @@ export const colorPalettes: Record<string, { light: PaletteShape; dark: PaletteS
       accent: '#60A5FA',
       primaryDark: '#0F172A',
       darkChip: '#0F172A',
+      textPrimary: '#2B1E15',
       backgroundTop: '#EEF5FF',
       backgroundBottom: '#DCEBFF',
       glow: '#CFE1FF',
@@ -129,6 +135,7 @@ export const colorPalettes: Record<string, { light: PaletteShape; dark: PaletteS
       accent: '#2563EB',
       primaryDark: '#E2E8F0',
       darkChip: '#E2E8F0',
+      textPrimary: '#F5E9E1',
       backgroundTop: '#0B1220',
       backgroundBottom: '#101A2B',
       glow: '#1B2B45',
@@ -143,6 +150,7 @@ export const colorPalettes: Record<string, { light: PaletteShape; dark: PaletteS
       accent: '#F97316',
       primaryDark: '#2A0F0F',
       darkChip: '#2A0F0F',
+      textPrimary: '#2B1E15',
       backgroundTop: '#FFF0F0',
       backgroundBottom: '#FFE1E1',
       glow: '#FCD0D0',
@@ -155,6 +163,7 @@ export const colorPalettes: Record<string, { light: PaletteShape; dark: PaletteS
       accent: '#EF4444',
       primaryDark: '#FBE3E3',
       darkChip: '#FBE3E3',
+      textPrimary: '#F5E9E1',
       backgroundTop: '#1A0F0F',
       backgroundBottom: '#241313',
       glow: '#2A1515',
@@ -166,9 +175,10 @@ export const colorPalettes: Record<string, { light: PaletteShape; dark: PaletteS
   mono: {
     light: {
       primary: '#111111',
-      accent: '#333333',
+      accent: '#111111',
       primaryDark: '#111111',
       darkChip: '#111111',
+      textPrimary: '#111111',
       backgroundTop: '#FFFFFF',
       backgroundBottom: '#F6F6F6',
       glow: '#EDEDED',
@@ -186,9 +196,10 @@ export const colorPalettes: Record<string, { light: PaletteShape; dark: PaletteS
     },
     dark: {
       primary: '#FFFFFF',
-      accent: '#D1D5DB',
+      accent: '#FFFFFF',
       primaryDark: '#FFFFFF',
       darkChip: '#FFFFFF',
+      textPrimary: '#FFFFFF',
       backgroundTop: '#0A0A0A',
       backgroundBottom: '#121212',
       glow: '#1A1A1A',

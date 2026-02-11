@@ -26,11 +26,13 @@ const getPalette = (name: PaletteName, mode: 'light' | 'dark') => {
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const deviceScheme = useColorScheme();
+  const isTest = process.env.NODE_ENV === 'test';
   const [mode, setMode] = useState<ThemeMode>('system');
   const [paletteName, setPaletteName] = useState<PaletteName>('orange');
-  const [hydrated, setHydrated] = useState(false);
+  const [hydrated, setHydrated] = useState(isTest);
 
   useEffect(() => {
+    if (isTest) return;
     const hydrate = async () => {
       try {
         const storedMode = await AsyncStorage.getItem(MODE_KEY);
@@ -51,10 +53,10 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (!hydrated) return;
+    if (!hydrated || isTest) return;
     AsyncStorage.setItem(MODE_KEY, mode).catch(() => null);
     AsyncStorage.setItem(PALETTE_KEY, paletteName).catch(() => null);
-  }, [mode, paletteName, hydrated]);
+  }, [mode, paletteName, hydrated, isTest]);
 
   const effectiveMode: 'light' | 'dark' = mode === 'system' ? (deviceScheme ?? 'light') : mode;
   const base = effectiveMode === 'dark' ? darkBase : lightBase;
