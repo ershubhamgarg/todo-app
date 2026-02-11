@@ -39,6 +39,12 @@ jest.mock('expo-font', () => ({
   loadAsync: jest.fn(),
 }));
 
+jest.mock('expo-screen-capture', () => ({
+  preventScreenCaptureAsync: jest.fn(),
+  allowScreenCaptureAsync: jest.fn(),
+  enableAppSwitcherProtectionAsync: jest.fn(),
+}));
+
 jest.mock('react-native-gesture-handler', () => {
   const React = require('react');
   const { View } = require('react-native');

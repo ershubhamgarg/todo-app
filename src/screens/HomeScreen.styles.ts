@@ -24,7 +24,7 @@ const createStyles = (colors, typography, spacing) =>
       paddingHorizontal: spacing.lg,
       paddingTop: spacing.lg,
       paddingBottom: spacing.sm,
-      backgroundColor: colors.backgroundTop,
+      backgroundColor: 'transparent',
       zIndex: 2,
     },
     scrollIntro: {

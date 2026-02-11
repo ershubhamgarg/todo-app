@@ -21,6 +21,7 @@
     "expo-font": "latest",
     "expo-linear-gradient": "latest",
     "expo-notifications": "latest",
+    "expo-screen-capture": "latest",
     "expo-status-bar": "latest",
     "react": "latest",
     "react-native": "latest",

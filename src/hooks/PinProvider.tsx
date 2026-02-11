@@ -1,5 +1,6 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppState } from 'react-native';
 
 const PIN_KEY = 'letsdoit.pin.v1';
 
@@ -21,6 +22,7 @@ export const PinProvider = ({ children }: { children: React.ReactNode }) => {
   const [pin, setPin] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(isTest);
   const [unlocked, setUnlocked] = useState(isTest);
+  const appState = useRef(AppState.currentState);
 
   useEffect(() => {
     if (isTest) return;
@@ -38,6 +40,17 @@ export const PinProvider = ({ children }: { children: React.ReactNode }) => {
     };
     hydrate();
   }, []);
+
+  useEffect(() => {
+    if (isTest) return;
+    const sub = AppState.addEventListener('change', (nextState) => {
+      if (nextState === 'background' || nextState === 'inactive') {
+        setUnlocked(false);
+      }
+      appState.current = nextState;
+    });
+    return () => sub.remove();
+  }, [isTest]);
 
   const setNewPin = useCallback(async (nextPin: string) => {
     if (!nextPin) return false;
@@ -64,8 +77,8 @@ export const PinProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   const lock = useCallback(() => {
-    if (pin) setUnlocked(false);
-  }, [pin]);
+    setUnlocked(false);
+  }, []);
 
   const value = useMemo(
     () => ({

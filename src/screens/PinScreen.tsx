@@ -8,7 +8,7 @@ import { useTheme } from '../theme/ThemeProvider';
 import typography from '../theme/typography';
 import spacing from '../theme/spacing';
 import { usePin } from '../hooks/PinProvider';
-import Toast from '../components/Toast';
+import { useToast } from '../hooks/ToastProvider';
 import type { RootStackParamList } from '../types';
 import type { StackScreenProps } from '@react-navigation/stack';
 
@@ -20,6 +20,7 @@ const PinScreen = ({ navigation, route }: Props) => {
   const { colors, effectiveMode } = useTheme();
   const styles = useMemo(() => createStyles(colors, typography, spacing), [colors]);
   const { hasPin, verifyPin, setNewPin } = usePin();
+  const { showToast } = useToast();
   const mode = route?.params?.mode || (hasPin ? 'unlock' : 'set');
   const isChangeFlow = mode === 'change';
   const [stage, setStage] = useState<'current' | 'new' | 'confirm'>(
@@ -63,6 +64,7 @@ const PinScreen = ({ navigation, route }: Props) => {
       if (mode === 'set') {
         await setNewPin(next);
         setSuccess('PIN set successfully.');
+        showToast('PIN set successfully.');
         setTimeout(() => navigation.goBack(), 700);
         return;
       }
@@ -81,6 +83,7 @@ const PinScreen = ({ navigation, route }: Props) => {
         } else {
           await setNewPin(next);
           setSuccess('PIN updated successfully.');
+          showToast('PIN updated successfully.');
           setTimeout(() => navigation.goBack(), 700);
         }
       }
@@ -111,6 +114,7 @@ const PinScreen = ({ navigation, route }: Props) => {
     if (mode === 'set') {
       await setNewPin(pinInput);
       setSuccess('PIN set successfully.');
+      showToast('PIN set successfully.');
       setTimeout(() => navigation.goBack(), 700);
       return;
     }
@@ -128,6 +132,7 @@ const PinScreen = ({ navigation, route }: Props) => {
       }
       await setNewPin(pinInput);
       setSuccess('PIN updated successfully.');
+      showToast('PIN updated successfully.');
       setTimeout(() => navigation.goBack(), 700);
     }
   };
@@ -206,7 +211,6 @@ const PinScreen = ({ navigation, route }: Props) => {
             ) : null}
           </View>
         </View>
-        <Toast message={success} />
       </View>
     </SafeAreaView>
   );

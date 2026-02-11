@@ -7,7 +7,7 @@ import { useTheme } from '../theme/ThemeProvider';
 import typography from '../theme/typography';
 import spacing from '../theme/spacing';
 import { usePin } from '../hooks/PinProvider';
-import Toast from '../components/Toast';
+import { useToast } from '../hooks/ToastProvider';
 import type { RootStackParamList } from '../types';
 import type { StackScreenProps } from '@react-navigation/stack';
 
@@ -19,6 +19,7 @@ const ConfirmPinScreen = ({ navigation }: Props) => {
   const { colors, effectiveMode } = useTheme();
   const styles = useMemo(() => createStyles(colors, typography, spacing), [colors]);
   const { verifyPin, clearPin } = usePin();
+  const { showToast } = useToast();
   const [pinInput, setPinInput] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -36,6 +37,7 @@ const ConfirmPinScreen = ({ navigation }: Props) => {
       } else {
         clearPin();
         setSuccess('PIN removed successfully.');
+        showToast('PIN removed successfully.');
         setTimeout(() => navigation.goBack(), 700);
       }
     }
@@ -85,7 +87,6 @@ const ConfirmPinScreen = ({ navigation }: Props) => {
             </Pressable>
           </View>
         </View>
-        <Toast message={success} />
       </View>
     </SafeAreaView>
   );
