@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -11,8 +11,10 @@ import QuickAdd from '../components/QuickAdd';
 import SectionHeader from '../components/SectionHeader';
 import TodoCard from '../components/TodoCard';
 import CustomHeader from '../components/CustomHeader';
-import styles from './HomeScreen.styles';
-import colors from '../theme/colors';
+import createStyles from './HomeScreen.styles';
+import typography from '../theme/typography';
+import spacing from '../theme/spacing';
+import { useTheme } from '../theme/ThemeProvider';
 
 const HomeScreen = ({ navigation }) => {
   const {
@@ -26,6 +28,8 @@ const HomeScreen = ({ navigation }) => {
     reorderTodos,
     clearExpiredReminders,
   } = useTodos();
+  const { colors, effectiveMode } = useTheme();
+  const styles = useMemo(() => createStyles(colors, typography, spacing), [colors]);
 
   const [now, setNow] = useState(Date.now());
 
@@ -42,7 +46,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
-      <StatusBar style="dark" />
+      <StatusBar style={effectiveMode === 'dark' ? 'light' : 'dark'} />
       <LinearGradient colors={[colors.backgroundTop, colors.backgroundBottom]} style={styles.background}>
         <View style={styles.glow} />
         <DraggableFlatList
@@ -68,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
           )}
           ListHeaderComponent={
             <View>
-              <CustomHeader />
+              <CustomHeader onSettings={() => navigation.navigate('Settings')} />
 
               <StatsCard stats={stats} />
 

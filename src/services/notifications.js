@@ -29,8 +29,8 @@ export const scheduleTodoReminder = async ({ title, minutesFromNow }) => {
     const trigger = { seconds: minutesFromNow * 60 };
     const id = await Notifications.scheduleNotificationAsync({
       content: {
-        title: 'Reminder',
-        body: title,
+        title: `Reminder: ${title}`,
+        body: `Let’s do it!!`,
       },
       trigger,
     });

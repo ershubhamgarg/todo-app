@@ -1,15 +1,20 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, TextInput, Pressable, Switch, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import { useTodos } from '../hooks/TodoProvider';
 import { PRIORITIES } from '../domain/todo';
 import CustomHeader from '../components/CustomHeader';
-import styles from './DetailScreen.styles';
-import colors from '../theme/colors';
+import createStyles from './DetailScreen.styles';
+import { useTheme } from '../theme/ThemeProvider';
+import typography from '../theme/typography';
+import spacing from '../theme/spacing';
 
 const DetailScreen = ({ navigation, route }) => {
   const { id } = route.params;
   const { todos, addTodo, updateTodo, removeTodo, setReminder } = useTodos();
+  const { colors, effectiveMode } = useTheme();
+  const styles = useMemo(() => createStyles(colors, typography, spacing), [colors]);
 
   const existing = useMemo(() => todos.find((item) => item.id === id), [id, todos]);
   const isNew = id === 'new' || !existing;
@@ -68,6 +73,7 @@ const DetailScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
+      <StatusBar style={effectiveMode === 'dark' ? 'light' : 'dark'} />
       <View style={styles.headerWrapper}>
         <CustomHeader
           title={isNew ? 'New Task' : 'Task Details'}
@@ -111,9 +117,7 @@ const DetailScreen = ({ navigation, route }) => {
                   onPress={() => setDue(item)}
                   style={[styles.chip, active && styles.chipActive]}
                 >
-                  <Text style={[styles.chipText, active && styles.chipTextActive]}>
-                    {item}
-                  </Text>
+                  <Text style={[styles.chipText, active && styles.chipTextActive]}>{item}</Text>
                 </Pressable>
               );
             })}

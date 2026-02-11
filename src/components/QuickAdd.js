@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, TextInput, Pressable, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import styles from './QuickAdd.styles';
-import colors from '../theme/colors';
+import createStyles from './QuickAdd.styles';
 import { FILTERS } from '../domain/todo';
+import { useTheme } from '../theme/ThemeProvider';
+import typography from '../theme/typography';
+import spacing from '../theme/spacing';
 
 const QuickAdd = ({ filter, onFilterChange, onAdd }) => {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors, typography, spacing), [colors]);
   const [input, setInput] = useState('');
 
   const handleAdd = async () => {

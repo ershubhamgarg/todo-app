@@ -1,4 +1,4 @@
-const colors = {
+export const lightColors = {
   backgroundTop: '#FFF4EC',
   backgroundBottom: '#FCE9D7',
   surface: '#FFFFFF',
@@ -16,6 +16,28 @@ const colors = {
   chip: '#FFEDE2',
   tag: '#F4E1D4',
   darkChip: '#2B1E15',
+  glow: '#FFD9C2',
+  avatarBg: '#FFF1E6',
 };
 
-export default colors;
+export const darkColors = {
+  backgroundTop: '#0F0E0D',
+  backgroundBottom: '#1A1512',
+  surface: '#1E1714',
+  surfaceMuted: '#241B17',
+  primary: '#FF6B35',
+  primaryDark: '#F5D4C0',
+  accent: '#FCA311',
+  textPrimary: '#F5E9E1',
+  textSecondary: '#C9B5A6',
+  textMuted: '#9B8576',
+  outline: '#3A2C24',
+  success: '#6BAF8B',
+  warning: '#D1A15A',
+  danger: '#E28C7B',
+  chip: '#2C221D',
+  tag: '#332822',
+  darkChip: '#F5E9E1',
+  glow: '#2B211B',
+  avatarBg: '#2A1F1A',
+};

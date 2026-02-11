@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import styles from './TodoCard.styles';
-import colors from '../theme/colors';
+import createStyles from './TodoCard.styles';
+import { useTheme } from '../theme/ThemeProvider';
+import typography from '../theme/typography';
+import spacing from '../theme/spacing';
 
 const TodoCard = ({ todo, onToggle, onStar, onPress, drag, isActive, draggable, now }) => {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors, typography, spacing), [colors]);
   const priorityStyle = styles[`badge${todo.priority}`] || styles.badgeMedium;
   const hasReminder = todo.reminderMinutes && todo.reminderMinutes > 0 && todo.reminderSetAt;
   let reminderLabel = null;
@@ -41,7 +45,7 @@ const TodoCard = ({ todo, onToggle, onStar, onPress, drag, isActive, draggable, 
             <Ionicons
               name={todo.starred ? 'star' : 'star-outline'}
               size={18}
-              color={todo.starred ? '#FFB703' : '#CBB4A2'}
+              color={todo.starred ? '#FFB703' : colors.textMuted}
             />
           </Pressable>
           {draggable ? (
