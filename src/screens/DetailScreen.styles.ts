@@ -21,6 +21,7 @@ const createStyles = (colors, typography, spacing) =>
       color: colors.textMuted,
       textTransform: 'uppercase',
       letterSpacing: 0.8,
+      marginBottom: spacing.xs,
     },
     input: {
       backgroundColor: colors.surface,

@@ -6,7 +6,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, SpaceGrotesk_400Regular, SpaceGrotesk_500Medium, SpaceGrotesk_700Bold } from '@expo-google-fonts/space-grotesk';
 import AppNavigator from './src/navigation/AppNavigator';
 import { TodoProvider } from './src/hooks/TodoProvider';
-import { ThemeProvider, useTheme } from './src/theme/ThemeProvider';
+import { ThemeProvider } from './src/theme/ThemeProvider';
+import { PinProvider } from './src/hooks/PinProvider';
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -23,9 +24,11 @@ const App = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <ThemeProvider>
-          <TodoProvider>
-            <AppNavigator />
-          </TodoProvider>
+          <PinProvider>
+            <TodoProvider>
+              <AppNavigator />
+            </TodoProvider>
+          </PinProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

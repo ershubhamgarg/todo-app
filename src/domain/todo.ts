@@ -1,5 +1,7 @@
-export const PRIORITIES = ['High', 'Medium', 'Low'];
-export const FILTERS = ['All', 'Today', 'Upcoming', 'Done'];
+import type { Filter, Priority, TodoItem } from '../types';
+
+export const PRIORITIES: Priority[] = ['High', 'Medium', 'Low'];
+export const FILTERS: Filter[] = ['All', 'Today', 'Upcoming', 'Done'];
 
 export const createTodo = ({
   title,
@@ -8,7 +10,14 @@ export const createTodo = ({
   priority = 'Medium',
   tags = [],
   reminderMinutes = 0,
-}) => ({
+}: {
+  title: string;
+  note?: string;
+  due?: string;
+  priority?: Priority;
+  tags?: string[];
+  reminderMinutes?: number;
+}): TodoItem => ({
   id: String(Date.now()),
   title,
   note,
@@ -23,7 +32,7 @@ export const createTodo = ({
   order: Date.now(),
 });
 
-export const seedTodos = [
+export const seedTodos: TodoItem[] = [
   {
     id: '1',
     title: 'Map the onboarding flow',

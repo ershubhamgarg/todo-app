@@ -72,6 +72,66 @@ const createStyles = (colors, typography, spacing) =>
       borderRadius: 5,
       backgroundColor: colors.primary,
     },
+    actionRow: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      marginTop: spacing.md,
+    },
+    actionButton: {
+      flex: 1,
+      paddingVertical: spacing.md,
+      borderRadius: 16,
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: colors.outline,
+      backgroundColor: colors.surface,
+    },
+    actionPrimary: {
+      backgroundColor: colors.primary,
+      borderColor: colors.primary,
+    },
+    actionText: {
+      fontSize: typography.size.md,
+      fontFamily: typography.fontFamily.bold,
+      color: colors.textPrimary,
+    },
+    actionTextPrimary: {
+      color: colors.surface,
+    },
+    paletteRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: spacing.sm,
+      marginTop: spacing.sm,
+    },
+    paletteItem: {
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.md,
+      borderRadius: 16,
+      borderWidth: 1,
+      borderColor: colors.outline,
+      backgroundColor: colors.surfaceMuted,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+    },
+    paletteItemActive: {
+      borderColor: colors.primary,
+      backgroundColor: colors.surface,
+    },
+    paletteSwatch: {
+      width: 18,
+      height: 18,
+      borderRadius: 9,
+      borderWidth: 1,
+      borderColor: colors.outline,
+    },
+    paletteText: {
+      fontSize: typography.size.sm,
+      fontFamily: typography.fontFamily.medium,
+      color: colors.textPrimary,
+      textTransform: 'capitalize',
+    },
   });
 
 export default createStyles;

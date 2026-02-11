@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import { useTodos } from '../hooks/TodoProvider';
+import { FILTERS } from '../domain/todo';
 import StatsCard from '../components/StatsCard';
 import QuickAdd from '../components/QuickAdd';
 import SectionHeader from '../components/SectionHeader';
@@ -15,8 +16,12 @@ import createStyles from './HomeScreen.styles';
 import typography from '../theme/typography';
 import spacing from '../theme/spacing';
 import { useTheme } from '../theme/ThemeProvider';
+import type { RootStackParamList, TodoItem } from '../types';
+import type { StackScreenProps } from '@react-navigation/stack';
 
-const HomeScreen = ({ navigation }) => {
+type Props = StackScreenProps<RootStackParamList, 'Home'>;
+
+const HomeScreen = ({ navigation }: Props) => {
   const {
     stats,
     visibleTodos,
@@ -32,6 +37,7 @@ const HomeScreen = ({ navigation }) => {
   const styles = useMemo(() => createStyles(colors, typography, spacing), [colors]);
 
   const [now, setNow] = useState(Date.now());
+  const [expandedIds, setExpandedIds] = useState<string[]>([]);
 
   useEffect(() => {
     const timer = setInterval(() => setNow(Date.now()), 1000);
@@ -49,7 +55,10 @@ const HomeScreen = ({ navigation }) => {
       <StatusBar style={effectiveMode === 'dark' ? 'light' : 'dark'} />
       <LinearGradient colors={[colors.backgroundTop, colors.backgroundBottom]} style={styles.background}>
         <View style={styles.glow} />
-        <DraggableFlatList
+        <View style={styles.stickyHeader}>
+          <CustomHeader onSettings={() => navigation.navigate('Settings')} />
+        </View>
+        <DraggableFlatList<TodoItem>
           data={visibleTodos}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.container}
@@ -63,20 +72,41 @@ const HomeScreen = ({ navigation }) => {
               todo={item}
               onToggle={() => toggleComplete(item.id)}
               onStar={() => toggleStar(item.id)}
-              onPress={() => navigation.navigate('Details', { id: item.id })}
+              onPress={() =>
+                setExpandedIds((prev: string[]) =>
+                  prev.includes(item.id) ? prev.filter((id) => id !== item.id) : [...prev, item.id]
+                )
+              }
+              onDetails={() => navigation.navigate('Details', { id: item.id })}
               drag={drag}
               isActive={isActive}
               draggable={draggable}
               now={now}
+              expanded={expandedIds.includes(item.id)}
             />
           )}
           ListHeaderComponent={
-            <View>
-              <CustomHeader onSettings={() => navigation.navigate('Settings')} />
-
+            <View style={styles.scrollIntro}>
               <StatsCard stats={stats} />
 
-              <QuickAdd filter={filter} onFilterChange={setFilter} onAdd={addTodo} />
+              <QuickAdd onAdd={addTodo} />
+
+              <View style={styles.filterRow}>
+                {FILTERS.map((item) => {
+                  const active = item === filter;
+                  return (
+                    <Pressable
+                      key={item}
+                      onPress={() => setFilter(item)}
+                      style={[styles.filterChip, active && styles.filterChipActive]}
+                    >
+                      <Text style={[styles.filterText, active && styles.filterTextActive]}>
+                        {item}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
 
               <SectionHeader title="Your Flow" subtitle={`${stats.done}/${stats.total} done`} />
               {!draggable && (

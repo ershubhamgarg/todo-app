@@ -5,8 +5,33 @@ import createStyles from './TodoCard.styles';
 import { useTheme } from '../theme/ThemeProvider';
 import typography from '../theme/typography';
 import spacing from '../theme/spacing';
+import type { TodoItem } from '../types';
 
-const TodoCard = ({ todo, onToggle, onStar, onPress, drag, isActive, draggable, now }) => {
+type Props = {
+  todo: TodoItem;
+  onToggle: () => void;
+  onStar: () => void;
+  onPress: () => void;
+  onDetails: () => void;
+  drag: () => void;
+  isActive: boolean;
+  draggable: boolean;
+  now: number;
+  expanded: boolean;
+};
+
+const TodoCard = ({
+  todo,
+  onToggle,
+  onStar,
+  onPress,
+  onDetails,
+  drag,
+  isActive,
+  draggable,
+  now,
+  expanded,
+}: Props) => {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors, typography, spacing), [colors]);
   const priorityStyle = styles[`badge${todo.priority}`] || styles.badgeMedium;
@@ -41,11 +66,16 @@ const TodoCard = ({ todo, onToggle, onStar, onPress, drag, isActive, draggable, 
           <Text style={[styles.title, todo.completed && styles.titleDone]} numberOfLines={1}>
             {todo.title}
           </Text>
+          <Ionicons
+            name={expanded ? 'chevron-up' : 'chevron-down'}
+            size={18}
+            color={colors.textMuted}
+          />
           <Pressable onPress={onStar}>
             <Ionicons
               name={todo.starred ? 'star' : 'star-outline'}
               size={18}
-              color={todo.starred ? '#FFB703' : colors.textMuted}
+              color={todo.starred ? colors.accent : colors.textMuted}
             />
           </Pressable>
           {draggable ? (
@@ -54,27 +84,35 @@ const TodoCard = ({ todo, onToggle, onStar, onPress, drag, isActive, draggable, 
             </Pressable>
           ) : null}
         </View>
-        <Text style={styles.note}>{todo.note}</Text>
-        <View style={styles.metaRow}>
-          <View style={[styles.badge, priorityStyle]}>
-            <Text style={styles.badgeText}>{todo.priority}</Text>
-          </View>
-          {reminderLabel ? (
-            <View style={styles.badgeOutline}>
-              <Ionicons name="timer-outline" size={14} color={colors.textSecondary} />
-              <Text style={styles.badgeOutlineText}>{reminderLabel}</Text>
+        {expanded ? (
+          <>
+            <Text style={styles.note}>{todo.note}</Text>
+            <View style={styles.metaRow}>
+              <View style={[styles.badge, priorityStyle]}>
+                <Text style={styles.badgeText}>{todo.priority}</Text>
+              </View>
+              {reminderLabel ? (
+                <View style={styles.badgeOutline}>
+                  <Ionicons name="timer-outline" size={14} color={colors.textSecondary} />
+                  <Text style={styles.badgeOutlineText}>{reminderLabel}</Text>
+                </View>
+              ) : null}
+              <View style={styles.badgeOutline}>
+                <Ionicons name="calendar-outline" size={14} color={colors.textSecondary} />
+                <Text style={styles.badgeOutlineText}>{todo.due}</Text>
+              </View>
+              {todo.tags.map((tag) => (
+                <View key={tag} style={styles.tag}>
+                  <Text style={styles.tagText}>{tag}</Text>
+                </View>
+              ))}
             </View>
-          ) : null}
-          <View style={styles.badgeOutline}>
-            <Ionicons name="calendar-outline" size={14} color={colors.textSecondary} />
-            <Text style={styles.badgeOutlineText}>{todo.due}</Text>
-          </View>
-          {todo.tags.map((tag) => (
-            <View key={tag} style={styles.tag}>
-              <Text style={styles.tagText}>{tag}</Text>
-            </View>
-          ))}
-        </View>
+            <Pressable style={styles.detailsButton} onPress={onDetails}>
+              <Text style={styles.detailsText}>View Details</Text>
+              <Ionicons name="chevron-forward" size={14} color={colors.textSecondary} />
+            </Pressable>
+          </>
+        ) : null}
       </View>
     </Pressable>
   );

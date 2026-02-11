@@ -7,6 +7,7 @@ const createStyles = (colors, typography, spacing) =>
       borderRadius: 20,
       padding: spacing.md,
       marginBottom: spacing.lg,
+      width: '100%',
       shadowColor: '#000',
       shadowOpacity: 0.08,
       shadowRadius: 16,
@@ -39,29 +40,6 @@ const createStyles = (colors, typography, spacing) =>
       shadowOpacity: 0.3,
       shadowRadius: 12,
       shadowOffset: { width: 0, height: 6 },
-    },
-    filterRow: {
-      flexDirection: 'row',
-      gap: spacing.sm,
-      marginTop: spacing.md,
-      flexWrap: 'wrap',
-    },
-    filterChip: {
-      paddingHorizontal: spacing.sm,
-      paddingVertical: spacing.sm - 2,
-      borderRadius: 999,
-      backgroundColor: colors.chip,
-    },
-    filterChipActive: {
-      backgroundColor: colors.darkChip,
-    },
-    filterText: {
-      color: colors.textSecondary,
-      fontSize: typography.size.sm,
-      fontFamily: typography.fontFamily.medium,
-    },
-    filterTextActive: {
-      color: colors.surface,
     },
   });
 

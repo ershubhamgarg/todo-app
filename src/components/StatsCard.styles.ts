@@ -6,6 +6,7 @@ const createStyles = (colors, typography, spacing) =>
       borderRadius: 24,
       padding: spacing.lg,
       marginBottom: spacing.lg,
+      width: '100%',
       shadowColor: colors.primary,
       shadowOpacity: 0.35,
       shadowRadius: 18,

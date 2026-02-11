@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { TodoItem } from '../types';
 
 const STORAGE_KEY = 'letsdoit.todos.v1';
 
-export const loadTodos = async () => {
+export const loadTodos = async (): Promise<TodoItem[] | null> => {
   try {
     const raw = await AsyncStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : null;
@@ -11,7 +12,7 @@ export const loadTodos = async () => {
   }
 };
 
-export const saveTodos = async (todos) => {
+export const saveTodos = async (todos: TodoItem[]): Promise<void> => {
   try {
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
   } catch (error) {
@@ -19,7 +20,7 @@ export const saveTodos = async (todos) => {
   }
 };
 
-export const clearTodos = async () => {
+export const clearTodos = async (): Promise<void> => {
   try {
     await AsyncStorage.removeItem(STORAGE_KEY);
   } catch (error) {

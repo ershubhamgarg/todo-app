@@ -8,7 +8,9 @@ import { useTheme } from '../theme/ThemeProvider';
 import typography from '../theme/typography';
 import spacing from '../theme/spacing';
 
-const StatsCard = ({ stats }) => {
+import type { TodoStats } from '../types';
+
+const StatsCard = ({ stats }: { stats: TodoStats }) => {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors, typography, spacing), [colors]);
   const completion = Math.round((stats.done / Math.max(stats.total, 1)) * 100);
@@ -19,12 +21,14 @@ const StatsCard = ({ stats }) => {
   const progress = Math.min(Math.max(completion, 0), 100);
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
+  const taskLabel = stats.today === 1 ? 'task' : 'tasks';
+
   return (
     <LinearGradient colors={[colors.primary, colors.accent]} style={styles.heroCard}>
       <View style={styles.heroTop}>
         <View>
           <Text style={styles.heroTitle}>Today Focus</Text>
-          <Text style={styles.heroCount}>{stats.today} tasks left</Text>
+          <Text style={styles.heroCount}>{stats.today} {taskLabel} left</Text>
         </View>
         <View style={styles.heroRing}>
           <Svg height={radius * 2} width={radius * 2}>

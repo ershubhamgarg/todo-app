@@ -6,13 +6,21 @@ import typography from '../theme/typography';
 import spacing from '../theme/spacing';
 import { useTheme } from '../theme/ThemeProvider';
 
+type Props = {
+  title?: string;
+  subtitle?: string;
+  showBack?: boolean;
+  onBack?: () => void;
+  onSettings?: () => void;
+};
+
 const CustomHeader = ({
   title = 'LetsDoIt',
   subtitle = 'Design your day, one win at a time.',
   showBack = false,
   onBack,
   onSettings,
-}) => {
+}: Props) => {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors, typography, spacing), [colors]);
 

@@ -62,6 +62,17 @@ const createStyles = (colors, typography, spacing) =>
       gap: spacing.xs,
       marginTop: spacing.md,
     },
+    detailsButton: {
+      marginTop: spacing.sm,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs,
+    },
+    detailsText: {
+      fontSize: typography.size.sm,
+      fontFamily: typography.fontFamily.medium,
+      color: colors.textSecondary,
+    },
     badge: {
       paddingHorizontal: spacing.sm,
       paddingVertical: spacing.xs,

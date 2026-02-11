@@ -8,7 +8,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export const registerForNotifications = async () => {
+export const registerForNotifications = async (): Promise<boolean> => {
   try {
     const { status } = await Notifications.requestPermissionsAsync();
     if (status === 'granted') {
@@ -23,7 +23,13 @@ export const registerForNotifications = async () => {
   }
 };
 
-export const scheduleTodoReminder = async ({ title, minutesFromNow }) => {
+export const scheduleTodoReminder = async ({
+  title,
+  minutesFromNow,
+}: {
+  title: string;
+  minutesFromNow: number;
+}): Promise<string | null> => {
   if (!minutesFromNow || minutesFromNow <= 0) return null;
   try {
     const trigger = { seconds: minutesFromNow * 60 };
@@ -40,7 +46,7 @@ export const scheduleTodoReminder = async ({ title, minutesFromNow }) => {
   }
 };
 
-export const cancelReminder = async (notificationId) => {
+export const cancelReminder = async (notificationId: string | null): Promise<void> => {
   if (!notificationId) return;
   try {
     await Notifications.cancelScheduledNotificationAsync(notificationId);

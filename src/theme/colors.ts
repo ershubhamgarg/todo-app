@@ -1,0 +1,208 @@
+import type { ThemeColors } from '../types';
+
+export const lightBase: Omit<ThemeColors, 'primary' | 'accent' | 'primaryDark' | 'darkChip'> = {
+  backgroundTop: '#FFF4EC',
+  backgroundBottom: '#FCE9D7',
+  surface: '#FFFFFF',
+  surfaceMuted: '#FFF9F4',
+  textPrimary: '#2B1E15',
+  textSecondary: '#7A5C48',
+  textMuted: '#9B7A64',
+  outline: '#E6D2C3',
+  success: '#B7E4C7',
+  warning: '#FFD6A5',
+  danger: '#FFB4A2',
+  chip: '#FFEDE2',
+  tag: '#F4E1D4',
+  glow: '#FFD9C2',
+  avatarBg: '#FFF1E6',
+};
+
+export const darkBase: Omit<ThemeColors, 'primary' | 'accent' | 'primaryDark' | 'darkChip'> = {
+  backgroundTop: '#0F0E0D',
+  backgroundBottom: '#1A1512',
+  surface: '#1E1714',
+  surfaceMuted: '#241B17',
+  textPrimary: '#F5E9E1',
+  textSecondary: '#C9B5A6',
+  textMuted: '#9B8576',
+  outline: '#3A2C24',
+  success: '#6BAF8B',
+  warning: '#D1A15A',
+  danger: '#E28C7B',
+  chip: '#2C221D',
+  tag: '#332822',
+  glow: '#2B211B',
+  avatarBg: '#2A1F1A',
+};
+
+type PaletteShape = Pick<
+  ThemeColors,
+  | 'primary'
+  | 'accent'
+  | 'primaryDark'
+  | 'darkChip'
+  | 'backgroundTop'
+  | 'backgroundBottom'
+  | 'glow'
+  | 'avatarBg'
+  | 'chip'
+  | 'tag'
+  | 'surface'
+  | 'surfaceMuted'
+  | 'outline'
+  | 'textSecondary'
+  | 'textMuted'
+  | 'success'
+  | 'warning'
+  | 'danger'
+>;
+
+export const colorPalettes: Record<string, { light: PaletteShape; dark: PaletteShape }> = {
+  orange: {
+    light: {
+      primary: '#FF6B35',
+      accent: '#FCA311',
+      primaryDark: '#2B1E15',
+      darkChip: '#2B1E15',
+      backgroundTop: '#FFF4EC',
+      backgroundBottom: '#FCE9D7',
+      glow: '#FFD9C2',
+      avatarBg: '#FFF1E6',
+      chip: '#FFEDE2',
+      tag: '#F4E1D4',
+    },
+    dark: {
+      primary: '#FF6B35',
+      accent: '#FCA311',
+      primaryDark: '#F5D4C0',
+      darkChip: '#F5E9E1',
+      backgroundTop: '#0F0E0D',
+      backgroundBottom: '#1A1512',
+      glow: '#2B211B',
+      avatarBg: '#2A1F1A',
+      chip: '#2C221D',
+      tag: '#332822',
+    },
+  },
+  green: {
+    light: {
+      primary: '#2E8F5B',
+      accent: '#76C893',
+      primaryDark: '#1B2C22',
+      darkChip: '#1B2C22',
+      backgroundTop: '#EFFBF4',
+      backgroundBottom: '#D8F3E4',
+      glow: '#C8EBD8',
+      avatarBg: '#E6F6EE',
+      chip: '#DAF0E4',
+      tag: '#CBE9DB',
+    },
+    dark: {
+      primary: '#76C893',
+      accent: '#2E8F5B',
+      primaryDark: '#D5F2E3',
+      darkChip: '#D5F2E3',
+      backgroundTop: '#0B1510',
+      backgroundBottom: '#122018',
+      glow: '#1B2C22',
+      avatarBg: '#1B2C22',
+      chip: '#1E2D25',
+      tag: '#24352B',
+    },
+  },
+  blue: {
+    light: {
+      primary: '#2563EB',
+      accent: '#60A5FA',
+      primaryDark: '#0F172A',
+      darkChip: '#0F172A',
+      backgroundTop: '#EEF5FF',
+      backgroundBottom: '#DCEBFF',
+      glow: '#CFE1FF',
+      avatarBg: '#E7F1FF',
+      chip: '#DDE9FF',
+      tag: '#D2E3FF',
+    },
+    dark: {
+      primary: '#60A5FA',
+      accent: '#2563EB',
+      primaryDark: '#E2E8F0',
+      darkChip: '#E2E8F0',
+      backgroundTop: '#0B1220',
+      backgroundBottom: '#101A2B',
+      glow: '#1B2B45',
+      avatarBg: '#1B2B45',
+      chip: '#152235',
+      tag: '#1C2B44',
+    },
+  },
+  red: {
+    light: {
+      primary: '#EF4444',
+      accent: '#F97316',
+      primaryDark: '#2A0F0F',
+      darkChip: '#2A0F0F',
+      backgroundTop: '#FFF0F0',
+      backgroundBottom: '#FFE1E1',
+      glow: '#FCD0D0',
+      avatarBg: '#FFE8E8',
+      chip: '#FCE0E0',
+      tag: '#F7D2D2',
+    },
+    dark: {
+      primary: '#F87171',
+      accent: '#EF4444',
+      primaryDark: '#FBE3E3',
+      darkChip: '#FBE3E3',
+      backgroundTop: '#1A0F0F',
+      backgroundBottom: '#241313',
+      glow: '#2A1515',
+      avatarBg: '#2A1515',
+      chip: '#241515',
+      tag: '#2E1A1A',
+    },
+  },
+  mono: {
+    light: {
+      primary: '#111111',
+      accent: '#333333',
+      primaryDark: '#111111',
+      darkChip: '#111111',
+      backgroundTop: '#FFFFFF',
+      backgroundBottom: '#F6F6F6',
+      glow: '#EDEDED',
+      avatarBg: '#F4F4F4',
+      chip: '#EFEFEF',
+      tag: '#E7E7E7',
+      surface: '#FFFFFF',
+      surfaceMuted: '#F3F3F3',
+      outline: '#D6D6D6',
+      textSecondary: '#4B4B4B',
+      textMuted: '#6B6B6B',
+      success: '#BDBDBD',
+      warning: '#A6A6A6',
+      danger: '#8C8C8C',
+    },
+    dark: {
+      primary: '#FFFFFF',
+      accent: '#D1D5DB',
+      primaryDark: '#FFFFFF',
+      darkChip: '#FFFFFF',
+      backgroundTop: '#0A0A0A',
+      backgroundBottom: '#121212',
+      glow: '#1A1A1A',
+      avatarBg: '#1A1A1A',
+      chip: '#1C1C1C',
+      tag: '#222222',
+      surface: '#121212',
+      surfaceMuted: '#1A1A1A',
+      outline: '#2A2A2A',
+      textSecondary: '#C4C4C4',
+      textMuted: '#A0A0A0',
+      success: '#8C8C8C',
+      warning: '#A6A6A6',
+      danger: '#BDBDBD',
+    },
+  },
+};

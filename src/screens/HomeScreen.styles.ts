@@ -20,8 +20,42 @@ const createStyles = (colors, typography, spacing) =>
       right: -60,
       opacity: 0.6,
     },
+    stickyHeader: {
+      paddingHorizontal: spacing.lg,
+      paddingTop: spacing.lg,
+      paddingBottom: spacing.sm,
+      backgroundColor: colors.backgroundTop,
+      zIndex: 2,
+    },
+    scrollIntro: {
+      paddingHorizontal: 0,
+    },
+    filterRow: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      marginTop: spacing.md,
+      marginBottom: spacing.md,
+      flexWrap: 'wrap',
+    },
+    filterChip: {
+      paddingHorizontal: spacing.sm,
+      paddingVertical: spacing.sm - 2,
+      borderRadius: 999,
+      backgroundColor: colors.chip,
+    },
+    filterChipActive: {
+      backgroundColor: colors.darkChip,
+    },
+    filterText: {
+      color: colors.textSecondary,
+      fontSize: typography.size.sm,
+      fontFamily: typography.fontFamily.medium,
+    },
+    filterTextActive: {
+      color: colors.surface,
+    },
     container: {
-      padding: spacing.lg,
+      paddingHorizontal: spacing.lg,
       paddingBottom: 160,
     },
     list: {

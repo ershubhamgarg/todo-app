@@ -6,19 +6,44 @@ import {
   registerForNotifications,
   scheduleTodoReminder,
 } from '../services/notifications';
+import type { Filter, TodoItem, TodoStats } from '../types';
 
-const TodoContext = createContext(null);
+type TodoContextValue = {
+  todos: TodoItem[];
+  filter: Filter;
+  setFilter: (filter: Filter) => void;
+  stats: TodoStats;
+  visibleTodos: TodoItem[];
+  addTodo: (payload: {
+    title: string;
+    note?: string;
+    due?: string;
+    priority?: TodoItem['priority'];
+    tags?: string[];
+    reminderMinutes?: number;
+  }) => Promise<TodoItem | undefined>;
+  updateTodo: (id: string, changes: Partial<TodoItem>) => Promise<void>;
+  toggleComplete: (id: string) => void;
+  toggleStar: (id: string) => void;
+  removeTodo: (id: string) => Promise<void>;
+  setReminder: (id: string, minutesFromNow: number) => Promise<void>;
+  reorderTodos: (orderedList: TodoItem[]) => void;
+  clearExpiredReminders: (now?: number) => void;
+};
 
-const sortByOrder = (items) => [...items].sort((a, b) => (a.order || 0) - (b.order || 0));
-const hasExpiredReminder = (todo, now) =>
+const TodoContext = createContext<TodoContextValue | null>(null);
+
+const sortByOrder = (items: TodoItem[]) =>
+  [...items].sort((a, b) => (a.order || 0) - (b.order || 0));
+const hasExpiredReminder = (todo: TodoItem, now: number) =>
   todo.reminderMinutes &&
   todo.reminderMinutes > 0 &&
   todo.reminderSetAt &&
   now - todo.reminderSetAt >= todo.reminderMinutes * 60 * 1000;
 
-export const TodoProvider = ({ children }) => {
-  const [todos, setTodos] = useState([]);
-  const [filter, setFilter] = useState(FILTERS[0]);
+export const TodoProvider = ({ children }: { children: React.ReactNode }) => {
+  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const [filter, setFilter] = useState<Filter>(FILTERS[0]);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -38,7 +63,7 @@ export const TodoProvider = ({ children }) => {
 
   // Reminder cleanup is triggered from the UI tick to avoid render loops here.
 
-  const stats = useMemo(() => {
+  const stats = useMemo<TodoStats>(() => {
     const total = todos.length;
     const done = todos.filter((t) => t.completed).length;
     const today = todos.filter((t) => t.due === 'Today' && !t.completed).length;
@@ -53,7 +78,14 @@ export const TodoProvider = ({ children }) => {
     return todos;
   }, [todos, filter]);
 
-  const addTodo = async (payload) => {
+  const addTodo = async (payload: {
+    title: string;
+    note?: string;
+    due?: string;
+    priority?: TodoItem['priority'];
+    tags?: string[];
+    reminderMinutes?: number;
+  }) => {
     const trimmed = payload.title.trim();
     if (!trimmed) return;
     const todo = createTodo({ ...payload, title: trimmed });
@@ -70,13 +102,13 @@ export const TodoProvider = ({ children }) => {
     return todo;
   };
 
-  const updateTodo = async (id, changes) => {
+  const updateTodo = async (id: string, changes: Partial<TodoItem>) => {
     setTodos((prev) =>
       prev.map((todo) => (todo.id === id ? { ...todo, ...changes } : todo))
     );
   };
 
-  const toggleComplete = (id) => {
+  const toggleComplete = (id: string) => {
     setTodos((prev) =>
       prev.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -84,13 +116,13 @@ export const TodoProvider = ({ children }) => {
     );
   };
 
-  const toggleStar = (id) => {
+  const toggleStar = (id: string) => {
     setTodos((prev) =>
       prev.map((todo) => (todo.id === id ? { ...todo, starred: !todo.starred } : todo))
     );
   };
 
-  const removeTodo = async (id) => {
+  const removeTodo = async (id: string) => {
     const todo = todos.find((item) => item.id === id);
     if (todo?.reminderId) {
       await cancelReminder(todo.reminderId);
@@ -98,7 +130,7 @@ export const TodoProvider = ({ children }) => {
     setTodos((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const setReminder = async (id, minutesFromNow) => {
+  const setReminder = async (id: string, minutesFromNow: number) => {
     const todo = todos.find((item) => item.id === id);
     if (!todo) return;
     if (todo.reminderId) {
@@ -132,7 +164,7 @@ export const TodoProvider = ({ children }) => {
     );
   };
 
-  const reorderTodos = (orderedList) => {
+  const reorderTodos = (orderedList: TodoItem[]) => {
     const orderedWithIndex = orderedList.map((todo, index) => ({
       ...todo,
       order: index + 1,
@@ -140,7 +172,7 @@ export const TodoProvider = ({ children }) => {
     setTodos(orderedWithIndex);
   };
 
-  const clearExpiredReminders = useCallback((now = Date.now()) => {
+  const clearExpiredReminders = useCallback((now: number = Date.now()) => {
     setTodos((prev) => {
       let changed = false;
       const next = prev.map((todo) => {
@@ -173,7 +205,7 @@ export const TodoProvider = ({ children }) => {
   return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
 };
 
-export const useTodos = () => {
+export const useTodos = (): TodoContextValue => {
   const context = useContext(TodoContext);
   if (!context) {
     throw new Error('useTodos must be used within TodoProvider');

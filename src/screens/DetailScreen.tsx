@@ -9,8 +9,12 @@ import createStyles from './DetailScreen.styles';
 import { useTheme } from '../theme/ThemeProvider';
 import typography from '../theme/typography';
 import spacing from '../theme/spacing';
+import type { RootStackParamList } from '../types';
+import type { StackScreenProps } from '@react-navigation/stack';
 
-const DetailScreen = ({ navigation, route }) => {
+type Props = StackScreenProps<RootStackParamList, 'Details'>;
+
+const DetailScreen = ({ navigation, route }: Props) => {
   const { id } = route.params;
   const { todos, addTodo, updateTodo, removeTodo, setReminder } = useTodos();
   const { colors, effectiveMode } = useTheme();
